@@ -5,7 +5,11 @@ const api = axios.create({
     : "/api",
 });
 
+if (!import.meta.env.VITE_BACKEND_URL) {
+  console.warn("VITE_BACKEND_URL is not set! Using /api as baseURL. This will NOT work in production unless you have a backend deployed on the same domain.");
+}
 console.log("API baseURL:", api.defaults.baseURL); // Debug: check backend URL
+
 api.interceptors.request.use((cfg) => {
   const t = localStorage.getItem("sw_token");
   if (t) cfg.headers.Authorization = `Bearer ${t}`;
@@ -22,5 +26,4 @@ api.interceptors.response.use(
     return Promise.reject(err);
   },
 );
-console.log("API baseURL:", api.defaults.baseURL);
 export default api;
