@@ -7,8 +7,9 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
-  'https://your-vercel-app.vercel.app', // add your deployed frontend if needed
-  'https://swippo-frontend.onrender.com' // keep this if you deploy frontend to Render
+  'https://swippo-ujm7.vercel.app', // your actual deployed frontend
+  'https://your-vercel-app.vercel.app',
+  'https://swippo-frontend.onrender.com'
 ];
 app.use(cors({
   origin: function(origin, callback) {
