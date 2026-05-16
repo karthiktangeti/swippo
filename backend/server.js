@@ -4,14 +4,15 @@ const mongoose = require('mongoose');
 const cors     = require('cors');
 
 const app = express();
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://your-vercel-app.vercel.app', // add your deployed frontend if needed
+  'https://swippo-frontend.onrender.com' // keep this if you deploy frontend to Render
+];
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow all localhost ports for dev, and deployed frontend for prod
-    const allowed = [
-      /^http:\/\/localhost:\d+$/,
-      'https://swippo-frontend.onrender.com', // replace with your deployed frontend URL if needed
-    ];
-    if (!origin || allowed.some(a => (typeof a === 'string' ? a === origin : a.test(origin)))) {
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
