@@ -6,7 +6,9 @@ const api = axios.create({
 });
 
 if (!import.meta.env.VITE_BACKEND_URL) {
-  console.warn("VITE_BACKEND_URL is not set! Using /api as baseURL. This will NOT work in production unless you have a backend deployed on the same domain.");
+  console.warn(
+    "VITE_BACKEND_URL is not set! Using /api as baseURL. This will NOT work in production unless you have a backend deployed on the same domain.",
+  );
 }
 console.log("API baseURL:", api.defaults.baseURL); // Debug: check backend URL
 
