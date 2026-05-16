@@ -1,5 +1,7 @@
 import axios from 'axios'
-const api = axios.create({ baseURL: '/api' })
+const api = axios.create({
+  baseURL: import.meta.env.VITE_BACKEND_URL ? `${import.meta.env.VITE_BACKEND_URL}/api` : '/api'
+})
 api.interceptors.request.use(cfg => {
   const t = localStorage.getItem('sw_token')
   if (t) cfg.headers.Authorization = `Bearer ${t}`

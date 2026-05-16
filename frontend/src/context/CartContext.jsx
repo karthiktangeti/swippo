@@ -1,15 +1,10 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '../utils/api'
 import { useAuth } from './AuthContext'
 
 const Ctx = createContext(null)
 
-const api = axios.create({ baseURL: '/api' })
-api.interceptors.request.use(cfg => {
-  const t = localStorage.getItem('sw_token')
-  if (t) cfg.headers.Authorization = `Bearer ${t}`
-  return cfg
-})
+
 
 export function CartProvider({ children }) {
   const { user } = useAuth()
