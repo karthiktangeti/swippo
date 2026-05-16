@@ -4,7 +4,21 @@ const mongoose = require('mongoose');
 const cors     = require('cors');
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow all localhost ports for dev, and deployed frontend for prod
+    const allowed = [
+      /^http:\/\/localhost:\d+$/,
+      'https://swippo-frontend.onrender.com', // replace with your deployed frontend URL if needed
+    ];
+    if (!origin || allowed.some(a => (typeof a === 'string' ? a === origin : a.test(origin)))) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 app.use('/api/auth',     require('./routes/auth'));
